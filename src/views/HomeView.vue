@@ -7,7 +7,9 @@ import axios from "axios"
     data: function () {
       return {
         message: "Movie Home Page!",
-        movies: []
+        movies: [],
+        currentMovie: {}
+
       };
     },
     created: function () {
@@ -20,6 +22,11 @@ import axios from "axios"
           console.log(response.data)
           this.movies = response.data
         })
+      },
+      moviesShow(movieeee){
+        console.log("showing specific movie")
+        this.currentMovie = movieeee
+        document.querySelector('#movie-details').showModal();
       }
 
     },
@@ -34,9 +41,16 @@ import axios from "axios"
     <h1>{{ message }}</h1>
     <div v-for="movie in movies">
       <p> Name of Movie: {{movie.name}} </p>
-      <hr />
 
+      <button v-on:click="moviesShow(movie)"> Show More Details</button>
+      <hr />
     </div>
+    <dialog id="movie-details">
+      <form method="dialog">
+        <p> Year{{currentMovie.year}}</p>
+        <button> Close</button>
+      </form>
+    </dialog>
 
   </div>
 </template>
